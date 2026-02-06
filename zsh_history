@@ -1,0 +1,103 @@
+npx create-next-app@latest study-platform --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --no-git
+node --version
+mkdir -p study-platform
+cd /Users/radetbezie/study-platform
+git init
+git --version
+cd /Users/radetbezie/study-platform/
+find /Users/radetbezie/ -name "SKILL.md" -maxdepth 4 2>/dev/null
+cd /Users/radetbezie/study-platform/
+find /Users/radetbezie/ -name "*ui-ux-pro-skill*" -maxdepth 4 2>/dev/null
+cd /Users/radetbezie/study-platform/
+ls -la /Users/radetbezie/study-platform/
+cd /Users/radetbezie/study-platform/
+find /Users/radetbezie -name "*ui-ux-pro*" -maxdepth 5 2>/dev/null
+cd /Users/radetbezie/study-platform/
+grep -rn "ui-ux-pro" /Users/radetbezie/ --exclude-dir=".gemini" --exclude-dir="Library" --exclude-dir="Applications" --max-count=1 2>/dev/null
+cd /Users/radetbezie/study-platform/
+find / -name "SKILL.md" -maxdepth 3 2>/dev/null
+cd /Users/radetbezie/study-platform
+npm uninstall firebase firebase-admin
+npm install @supabase/supabase-js
+rm src/lib/firebase.ts src/lib/firebase-admin.ts
+rm FIREBASE_SETUP.md
+cat >> prisma/schema.prisma <<EOF\
+\
+// ============================================\
+// SOCIAL & DISCOVERY\
+// ============================================\
+\
+model Follows {\
+  followerId  String\
+  followingId String\
+  createdAt   DateTime @default(now())\
+\
+  follower    User     @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)\
+  following   User     @relation("following", fields: [followingId], references: [id], onDelete: Cascade)\
+\
+  @@id([followerId, followingId])\
+  @@map("follows")\
+}\
+\
+// ============================================\
+// IMPORT / EXPORT & BACKUPS\
+// ============================================\
+\
+model Backup {\
+  id        String   @id @default(cuid())\
+  userId    String\
+  url       String   // URL to the backup file\
+  type      String   // full_account, notes, flashcards, etc.\
+  size      BigInt   @default(0)\
+  createdAt DateTime @default(now())\
+  expiresAt DateTime? // Auto-delete after X days\
+\
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)\
+\
+  @@map("backups")\
+}\
+EOF
+cat >> src/app/globals.css <<EOF\
+\
+/* ============================================\
+   ACCESSIBILITY MODES\
+   ============================================ */\
+\
+/* High Contrast Mode */\
+:root.high-contrast {\
+  --color-bg: #000000;\
+  --color-text: #ffffff;\
+  --color-primary: #ffff00; /* Yellow on Black */\
+  --color-secondary: #00ffff; /* Cyan */\
+  --color-accent: #ff00ff; /* Magenta */\
+  --color-border: #ffffff;\
+  --color-surface: #000000;\
+  --color-bg-secondary: #1a1a1a;\
+}\
+\
+:root.high-contrast a {\
+  text-decoration: underline;\
+  color: #ffff00;\
+}\
+\
+:root.high-contrast button {\
+  border: 2px solid white;\
+}\
+\
+/* Large Text Mode */\
+:root.text-large {\
+  font-size: 125%; /* Boost base size */\
+}\
+\
+/* Dyslexia Font - Mock implementation */\
+/* In a real app, we would load the font file */\
+:root.font-dyslexic body {\
+  font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif !important; \
+  /* OpenDyslexic is often replaced by Comic Sans as a web-safe alternative if not loaded */\
+  line-height: 1.8;\
+  letter-spacing: 0.05em;\
+}\
+EOF
+npm install framer-motion
+which npm
+ls -a
